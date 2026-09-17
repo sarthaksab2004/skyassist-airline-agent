@@ -160,10 +160,24 @@ def health_check():
 # ──────────────────────────────────────────
 STATIC_DIR = os.path.join(os.path.dirname(__file__), "static")
 
-app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
+
+class NoCacheStaticFiles(StaticFiles):
+    """Static file server that tells browsers/CDNs not to cache CSS/JS,
+    so a redeploy is always reflected immediately (avoids stale mobile CSS)."""
+    async def get_response(self, path, scope):
+        response = await super().get_response(path, scope)
+        response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+        response.headers["Pragma"] = "no-cache"
+        response.headers["Expires"] = "0"
+        return response
+
+
+app.mount("/static", NoCacheStaticFiles(directory=STATIC_DIR), name="static")
 
 
 @app.get("/")
 def serve_index():
     """Serve the main chat interface."""
-    return FileResponse(os.path.join(STATIC_DIR, "index.html"))
+    return FileResponse(os.path.join(STATIC_DIR, "index.html"), headers={
+        "Cache-Control": "no-cache, no-store, must-revalidate"
+    })

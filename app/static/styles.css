@@ -64,13 +64,21 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  min-width: 0;
+}
+
+html {
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 body {
   font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   height: 100vh;
-  width: 100vw;
-  overflow: hidden;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  overflow-y: hidden;
   background-color: var(--bg-main);
   color: var(--text-primary);
   display: flex;
@@ -474,12 +482,14 @@ body {
 }
 .welcome-scenarios {
   display: flex;
+  flex-wrap: wrap;
   gap: 16px;
   max-width: 860px;
   width: 100%;
 }
 .scenario-card {
-  flex: 1;
+  flex: 1 1 240px;
+  min-width: 0;
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
@@ -490,6 +500,8 @@ body {
   position: relative;
   display: flex;
   flex-direction: column;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 .scenario-card:hover {
   transform: translateY(-4px);
