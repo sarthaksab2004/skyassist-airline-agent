@@ -22,9 +22,13 @@
 
 ## 🌐 Live Demo (One-Click, No Setup)
 
-[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/<your-username>/airline-resolution-agent)
+**👉 Try it now: [https://skyassist-airline-agent.onrender.com](https://skyassist-airline-agent.onrender.com)**
 
-Click the button above (after pushing this repo to GitHub — see **GitHub Setup** below) to deploy a live, shareable link. Anyone — including a recruiter — can then open that URL and use the app instantly, with zero local setup. The app runs perfectly with **no Groq key at all**, using its built-in deterministic Policy Engine, so it works out of the box.
+Anyone — including a recruiter — can open that URL and use the app instantly, with zero local setup. The app runs perfectly with **no Groq key at all**, using its built-in deterministic Policy Engine, so it works out of the box.
+
+> **Note:** This is hosted on Render's free tier, which spins down after periods of inactivity. If the link seems slow on first load, give it 30–60 seconds to wake up.
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/sarthaksab2004/skyassist-airline-agent)
 
 ---
 
@@ -34,8 +38,8 @@ Follow these simple steps to run the interactive agent locally:
 
 ### 1. Clone & Navigate to Repository
 ```bash
-git clone https://github.com/<your-username>/airline-resolution-agent.git
-cd airline-resolution-agent
+git clone https://github.com/sarthaksab2004/skyassist-airline-agent.git
+cd skyassist-airline-agent
 ```
 
 ### 2. Set Up Virtual Environment & Dependencies
@@ -134,28 +138,19 @@ All data is strictly grounded in the Assignment 3 Data Pack:
 
 To publish this project to your GitHub account:
 
-```bash
-# 1. Initialize git (if not already initialized)
-git init
+✅ This repository is already live on GitHub and deployed on Render:
 
-# 2. Add files and commit
-git add .
-git commit -m "feat: complete SkyAssist airline resolution agent with Groq & UI"
+- **Repo:** [github.com/sarthaksab2004/skyassist-airline-agent](https://github.com/sarthaksab2004/skyassist-airline-agent)
+- **Live app:** [skyassist-airline-agent.onrender.com](https://skyassist-airline-agent.onrender.com)
 
-# 3. Create a new repository on GitHub (e.g. named airline-resolution-agent)
-
-# 4. Link and push
-git remote add origin https://github.com/<your-username>/airline-resolution-agent.git
-git branch -M main
-git push -u origin main
-```
+Deployment is handled by `render.yaml` — pushing to `main` triggers an automatic redeploy on Render.
 
 ---
 
 ## 📁 Repository Structure
 
 ```
-airline-resolution-agent/
+skyassist-airline-agent/
 ├── app/
 │   ├── __init__.py           # Package indicator
 │   ├── data.py               # Grounded Data Pack (Customers, Bookings, Policies)
