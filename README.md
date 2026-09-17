@@ -13,7 +13,7 @@
 | **1. Working Agent / Clickable Prototype** | Full-stack interactive web application running locally on port 8000 | ✅ Complete |
 | **2. Architecture & Process Flow** | [`ARCHITECTURE.md`](./ARCHITECTURE.md) with Mermaid diagrams | ✅ Complete |
 | **3. Inputs, Sources & Assumptions** | Strictly grounded in Data Pack: [`app/data.py`](./app/data.py) & Section 4 below | ✅ Complete |
-| **4. AI Tools Used & How They Were Used** | Documented in Section 5 below (Groq, GPT-OSS 120B, subagents) | ✅ Complete |
+| **4. AI Tools Used & How They Were Used** | Groq, GPT-OSS 120B, subagents | ✅ Complete |
 
 ---
 
