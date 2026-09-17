@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkyAssist — SkyWay Airlines AI Disruption Operations</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✈️</text></svg>">
+</head>
+<body>
+    <div class="background-glow"></div>
+    <div class="app-container">
+
+        <!-- ═══ LEFT SIDEBAR — Passenger Selector ═══ -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="brand">
+                    <div class="brand-icon">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.3c.4-.2.6-.6.5-1.1z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="brand-title">SkyAssist <span class="brand-tag">OPS</span></div>
+                        <div class="brand-subtitle">Autonomous Disruption Resolution</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-status-pill" id="sidebarModelBadge">
+                <span class="status-indicator-dot"></span>
+                <span id="modelBadgeText" class="badge-text">Groq GPT-OSS · 120B</span>
+                <button class="key-cfg-btn" title="Configure Groq API Key" onclick="toggleKeyModal()">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="m21 2-2 2m-1.5 1.5L12 11l4 4 5.5-5.5a2.12 2.12 0 0 0 0-3L19 4a2.12 2.12 0 0 0-3 0Z"/>
+                        <path d="m9 11-6 6v3h3l6-6"/>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="sidebar-section-header">
+                <span>Disrupted Passengers</span>
+                <span class="passenger-count" id="passengerCount">3 Active</span>
+            </div>
+
+            <div class="customer-list" id="customerList">
+                <!-- Injected via JavaScript -->
+            </div>
+
+            <div class="sidebar-footer">
+                <div class="live-clock">
+                    <span class="clock-icon">🕒</span>
+                    <span id="currentDate">Wed 23 Sep 2026 · 18:40 IST</span>
+                </div>
+                <button class="new-session-btn" id="newSessionBtn" onclick="resetSession()">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                        <path d="M3 3v5h5"/>
+                    </svg>
+                    Reset Active Session
+                </button>
+            </div>
+        </aside>
+
+        <!-- ═══ CENTER — Conversational Stage ═══ -->
+        <main class="main-content">
+            <!-- Welcome screen -->
+            <div class="welcome-screen" id="welcomeScreen">
+                <div class="welcome-badge">Autonomous Aviation Agent</div>
+                <h2 class="welcome-title">SkyAssist Disruption Cockpit</h2>
+                <p class="welcome-text">
+                    Enterprise-grade AI agent resolving passenger disruptions in real time.
+                    Grounded in SkyWay Airlines policy: rebooking, delay compensation vouchers, hotel accommodation, and automated supervisor escalation.
+                </p>
+
+                <div class="welcome-scenarios-title">Select a scenario to evaluate:</div>
+                <div class="welcome-scenarios">
+                    <div class="scenario-card" onclick="selectCustomerById('priya_nair')">
+                        <div class="sc-header">
+                            <span class="tier-pill tier-gold">GOLD</span>
+                            <span class="sc-status-badge sc-cancelled">Cancelled</span>
+                        </div>
+                        <div class="sc-name">Priya Nair</div>
+                        <div class="sc-route">DEL ➔ GOI · SK-204</div>
+                        <div class="sc-desc">Flight cancelled · Demands full refund & business upgrade</div>
+                        <div class="sc-action-hint">Test Scenario 1 ➔</div>
+                    </div>
+                    <div class="scenario-card" onclick="selectCustomerById('arvind_kulkarni')">
+                        <div class="sc-header">
+                            <span class="tier-pill tier-silver">SILVER</span>
+                            <span class="sc-status-badge sc-delayed">4h Delay</span>
+                        </div>
+                        <div class="sc-name">Arvind Kulkarni</div>
+                        <div class="sc-route">BOM ➔ BLR · SK-118</div>
+                        <div class="sc-desc">Delayed 4 hours · Frustrated, asks for hotel room</div>
+                        <div class="sc-action-hint">Test Scenario 2 ➔</div>
+                    </div>
+                    <div class="scenario-card" onclick="selectCustomerById('meher_kaur')">
+                        <div class="sc-header">
+                            <span class="tier-pill tier-platinum">PLATINUM</span>
+                            <span class="sc-status-badge sc-delayed-long">6h Delay</span>
+                        </div>
+                        <div class="sc-name">Meher Kaur</div>
+                        <div class="sc-route">DEL ➔ HYD · SK-305</div>
+                        <div class="sc-desc">Delayed 6 hours · Wants full-night hotel & ₹2,000 waiver</div>
+                        <div class="sc-action-hint">Test Scenario 3 ➔</div>
+                    </div>
+                </div>
+
+                <div class="welcome-features">
+                    <div class="wf-item"><span class="wf-icon">⚡</span> Sub-second Groq Inference</div>
+                    <div class="wf-item"><span class="wf-icon">🛡️</span> Zero Revenue Leakage Guardrails</div>
+                    <div class="wf-item"><span class="wf-icon">💬</span> Non-blocking Supervisor Escalation</div>
+                </div>
+            </div>
+
+            <!-- Chat interface -->
+            <div class="chat-container" id="chatContainer" style="display:none;">
+                <div class="chat-header" id="chatHeader">
+                    <div class="chat-header-left">
+                        <div class="passenger-avatar-ring">
+                            <div class="chat-header-avatar" id="headerAvatar">P</div>
+                        </div>
+                        <div>
+                            <div class="header-name-row">
+                                <span class="chat-header-name" id="headerName">Customer</span>
+                                <span class="tier-pill" id="headerTierBadge">GOLD</span>
+                            </div>
+                            <div class="chat-header-details" id="headerDetails">PNR: --- · Route: ---</div>
+                        </div>
+                    </div>
+                    <div class="header-right-meta">
+                        <div class="session-active-pill" id="headerStatus">
+                            <span class="pulse-dot"></span>
+                            <span id="sessionStatusLabel">Agent Active</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Post-Escalation Banner (Non-blocking) -->
+                <div class="case-escalation-alert" id="escalationBanner" style="display:none;">
+                    <div class="alert-icon-wrap">🚨</div>
+                    <div class="alert-body">
+                        <div class="alert-title-row">
+                            <span class="alert-title">Supervisor Attention Logged</span>
+                            <span class="alert-tag">Case Under Review</span>
+                        </div>
+                        <p class="alert-text" id="escalationReason">Case under supervisor review.</p>
+                        <div class="alert-subtext">You can continue chatting with SkyAssist for any standard flight inquiries, baggage, terminal directions, or meal vouchers.</div>
+                    </div>
+                </div>
+
+                <!-- Messages Stream -->
+                <div class="chat-messages" id="chatMessages">
+                    <!-- Dynamic message bubbles -->
+                </div>
+
+                <!-- Quick Prompts Toolbar -->
+                <div class="quick-prompts-bar" id="quickPromptsBar">
+                    <div class="qp-label">
+                        <span>Quick Inquiries:</span>
+                    </div>
+                    <div class="qp-scroll" id="qpContainer">
+                        <!-- Injected via JavaScript based on customer -->
+                    </div>
+                </div>
+
+                <!-- Modern Floating Chat Input Area -->
+                <div class="chat-input-container">
+                    <div class="input-card">
+                        <textarea
+                            id="messageInput"
+                            placeholder="Ask a question or describe your concern..."
+                            rows="1"
+                            onkeydown="handleKeyDown(event)"
+                        ></textarea>
+                        <button class="send-action-btn" id="sendBtn" onclick="sendMessage()" title="Send Message (Enter)">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                                <line x1="22" y1="2" x2="11" y2="13"></line>
+                                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="input-statusbar">
+                        <span>Grounded in SkyWay Disruption Policies</span>
+                        <span>•</span>
+                        <span>Press Enter to send · Shift+Enter for new line</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- ═══ RIGHT PANEL — Flight Cockpit & Digital Wallet ═══ -->
+        <aside class="action-panel" id="actionPanel">
+            <div class="panel-header">
+                <div class="panel-title">Operations Cockpit</div>
+                <div class="panel-subtitle">Live Passenger State & Wallet</div>
+            </div>
+
+            <!-- Boarding Pass / Itinerary Card -->
+            <div class="panel-card" id="flightSection" style="display:none;">
+                <div class="panel-card-title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M2 12h20M2 12l5-5m-5 5 5 5"/>
+                    </svg>
+                    Digital Boarding Pass
+                </div>
+                <div id="flightDetails">
+                    <!-- Injected dynamically -->
+                </div>
+            </div>
+
+            <!-- Digital Benefits & Vouchers Wallet -->
+            <div class="panel-card" id="walletSection" style="display:none;">
+                <div class="panel-card-title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect width="20" height="14" x="2" y="5" rx="2"/>
+                        <line x1="2" x2="22" y1="10" y2="10"/>
+                    </svg>
+                    Issued Vouchers & Benefits
+                </div>
+                <div class="wallet-items" id="walletContainer">
+                    <div class="empty-wallet-note">No vouchers issued yet</div>
+                </div>
+            </div>
+
+            <!-- Sentiment & Emotional Radar -->
+            <div class="panel-card" id="sentimentSection" style="display:none;">
+                <div class="panel-card-title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                        <line x1="9" x2="9.01" y1="9" y2="9"/>
+                        <line x1="15" x2="15.01" y1="9" y2="9"/>
+                    </svg>
+                    Real-Time Sentiment Radar
+                </div>
+                <div class="sentiment-indicator" id="sentimentIndicator">
+                    <span class="sentiment-emoji" id="sentimentEmoji">😐</span>
+                    <div class="sentiment-info">
+                        <div class="sentiment-label" id="sentimentLabel">Neutral Passenger</div>
+                        <div class="sentiment-desc" id="sentimentDesc">Standard inquiry state</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Audit Timeline -->
+            <div class="panel-card" id="actionSection" style="display:none;">
+                <div class="panel-card-title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                    </svg>
+                    Policy Execution Audit Log
+                </div>
+                <div class="action-timeline" id="actionTimeline">
+                    <div class="empty-state" id="emptyActions">
+                        <span class="empty-icon">📋</span>
+                        <p>No policy actions executed yet</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Empty panel state -->
+            <div class="panel-empty" id="panelEmpty">
+                <div class="empty-graphic">✈️</div>
+                <h3>Select a Passenger</h3>
+                <p>Choose a disrupted passenger from the sidebar or click a scenario to view live itinerary, digital vouchers, and real-time policy audit trail.</p>
+            </div>
+        </aside>
+    </div>
+
+    <!-- API Key Modal -->
+    <div class="modal-overlay" id="keyModal" style="display:none;" onclick="closeKeyModalOnOverlay(event)">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3>Groq Cloud API Configuration</h3>
+                <button class="modal-close-icon" onclick="toggleKeyModal()">✕</button>
+            </div>
+            <p>Connect your Groq API key to power ultra-low latency reasoning with <strong>GPT-OSS 120B</strong>.</p>
+            <div class="modal-input-group">
+                <label for="groqKeyInput">Groq API Key (starts with gsk_)</label>
+                <input type="password" id="groqKeyInput" placeholder="gsk_..." autocomplete="off">
+            </div>
+            <div class="modal-note">
+                💡 If left unconfigured, SkyAssist seamlessly runs using the deterministic enterprise Policy Engine.
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-cancel-btn" onclick="toggleKeyModal()">Cancel</button>
+                <button class="modal-save-btn" onclick="saveGroqKey()">Save & Connect</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
