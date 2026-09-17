@@ -1399,6 +1399,16 @@ body {
   }
   body {
     height: 100dvh;
+    /* ROOT CAUSE OF THE MOBILE LAYOUT BREAKAGE:
+       <body> is "display: flex" (row, by default) with .mobile-topbar and
+       .app-container as direct siblings. Without flex-direction: column
+       here, the topbar — meant to be a thin horizontal strip — stretches
+       to fill the full viewport HEIGHT as a vertical column instead,
+       squeezing .app-container into a narrow leftover width. That's what
+       produced the "everything overlapping" mobile view: the topbar,
+       sidebar and chat content were all fighting for space in a row
+       layout that was never meant to apply on phones. */
+    flex-direction: column;
   }
 
   .mobile-topbar {
