@@ -17,6 +17,12 @@ const API = "";
 // ──────────────────────────────────────────
 // Initialization
 // ──────────────────────────────────────────
+window.addEventListener("resize", () => {
+    if (!isMobileViewport()) {
+        closeDrawers();
+    }
+});
+
 document.addEventListener("DOMContentLoaded", () => {
     checkSystemStatus();
     loadCustomers();
@@ -98,6 +104,41 @@ function renderCustomerList() {
     });
 }
 
+// ──────────────────────────────────────────
+// Mobile Drawer Controls (sidebar & cockpit panel)
+// ──────────────────────────────────────────
+function toggleSidebar() {
+    const sidebar = document.getElementById("sidebar");
+    const overlay = document.getElementById("drawerOverlay");
+    const isOpen = sidebar.classList.contains("drawer-open");
+    closeDrawers();
+    if (!isOpen) {
+        sidebar.classList.add("drawer-open");
+        overlay.classList.add("visible");
+    }
+}
+
+function toggleActionPanel() {
+    const panel = document.getElementById("actionPanel");
+    const overlay = document.getElementById("drawerOverlay");
+    const isOpen = panel.classList.contains("drawer-open");
+    closeDrawers();
+    if (!isOpen) {
+        panel.classList.add("drawer-open");
+        overlay.classList.add("visible");
+    }
+}
+
+function closeDrawers() {
+    document.getElementById("sidebar").classList.remove("drawer-open");
+    document.getElementById("actionPanel").classList.remove("drawer-open");
+    document.getElementById("drawerOverlay").classList.remove("visible");
+}
+
+function isMobileViewport() {
+    return window.matchMedia("(max-width: 900px)").matches;
+}
+
 function selectCustomerById(id) {
     const target = state.customers.find(c => c.id === id);
     if (target) {
@@ -114,6 +155,11 @@ async function selectCustomer(customer) {
     state.currentCustomer = customer;
     state.issuedVouchers = [];
     renderCustomerList();
+
+    // On mobile, close the passenger drawer once a selection is made
+    if (isMobileViewport()) {
+        closeDrawers();
+    }
 
     // Toggle panels
     document.getElementById("welcomeScreen").style.display = "none";

@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#090d16">
     <title>SkyAssist — SkyWay Airlines AI Disruption Operations</title>
     <link rel="stylesheet" href="/static/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,10 +13,26 @@
 </head>
 <body>
     <div class="background-glow"></div>
+
+    <!-- Mobile top bar (hidden on desktop) -->
+    <div class="mobile-topbar" id="mobileTopbar">
+        <button class="mobile-icon-btn" id="mobileMenuBtn" onclick="toggleSidebar()" aria-label="Open passenger list">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <div class="mobile-topbar-title">SkyAssist <span class="brand-tag">OPS</span></div>
+        <button class="mobile-icon-btn" id="mobileCockpitBtn" onclick="toggleActionPanel()" aria-label="Open operations cockpit">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="3" width="7" height="18" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        </button>
+    </div>
+
+    <!-- Drawer overlay for mobile/tablet -->
+    <div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawers()"></div>
+
     <div class="app-container">
 
         <!-- ═══ LEFT SIDEBAR — Passenger Selector ═══ -->
         <aside class="sidebar" id="sidebar">
+            <button class="drawer-close-btn" id="sidebarCloseBtn" onclick="closeDrawers()" aria-label="Close">✕</button>
             <div class="sidebar-header">
                 <div class="brand">
                     <div class="brand-icon">
@@ -195,6 +212,7 @@
 
         <!-- ═══ RIGHT PANEL — Flight Cockpit & Digital Wallet ═══ -->
         <aside class="action-panel" id="actionPanel">
+            <button class="drawer-close-btn" id="actionPanelCloseBtn" onclick="closeDrawers()" aria-label="Close">✕</button>
             <div class="panel-header">
                 <div class="panel-title">Operations Cockpit</div>
                 <div class="panel-subtitle">Live Passenger State & Wallet</div>
