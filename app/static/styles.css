@@ -591,6 +591,18 @@ body {
   display: flex;
   align-items: center;
   gap: 14px;
+  min-width: 0; /* allow this side to shrink instead of pushing the right side off-screen on mobile */
+}
+.header-name-row,
+.chat-header-name,
+.chat-header-details {
+  min-width: 0;
+}
+.chat-header-name,
+.chat-header-details {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .passenger-avatar-ring {
   padding: 2px;
@@ -830,6 +842,7 @@ body {
   display: flex;
   align-items: center;
   gap: 12px;
+  min-width: 0; /* allow this flex row itself to shrink inside its parent */
 }
 .qp-label {
   font-size: 0.72rem;
@@ -838,6 +851,7 @@ body {
   color: var(--text-muted);
   letter-spacing: 0.5px;
   white-space: nowrap;
+  flex-shrink: 0; /* never let the label get squeezed/overlapped */
 }
 .qp-scroll {
   display: flex;
@@ -845,6 +859,11 @@ body {
   overflow-x: auto;
   scrollbar-width: none;
   padding: 2px 0;
+  min-width: 0; /* CRITICAL: without this, a flex child won't shrink below its
+                   content width, so it never actually scrolls and instead
+                   compresses its children, causing their nowrap text to
+                   spill into one another (the overlapping chip labels) */
+  flex: 1 1 auto;
 }
 .qp-scroll::-webkit-scrollbar { display: none; }
 .qp-chip {
@@ -858,6 +877,9 @@ body {
   white-space: nowrap;
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  flex-shrink: 0; /* CRITICAL: stops chips from being squeezed and their text
+                     overlapping the next chip — each chip now keeps its own
+                     natural width and the row scrolls horizontally instead */
 }
 .qp-chip:hover {
   background: rgba(56, 189, 248, 0.12);
